@@ -9,22 +9,29 @@ datasource db {
 }
 
 model Category {
-  id       String     @id @default(nanoid(7))
-  name     String
-  slug     String
-  parentId String?
-  products Product[]
-  parent   Category?  @relation("CategoryToParent", fields: [parentId], references: [id])
-  children Category[] @relation("CategoryToParent")
+  id          String     @id @default(nanoid(7))
+  name        String
+  slug        String
+  parentId    String?
+  description String
+  products    Product[]
+  parent      Category?  @relation("CategoryToParent", fields: [parentId], references: [id])
+  children    Category[] @relation("CategoryToParent")
 
   @@unique([name, parentId])
   @@unique([slug, parentId])
 }
 
 model Product {
-  id         String   @id @default(nanoid(7))
-  name       String   @unique
-  amount     Float
-  categoryId String
-  category   Category @relation(fields: [categoryId], references: [id])
+  id          String   @id @default(nanoid(7))
+  name        String   @unique
+  slug        String   @unique
+  price       Float
+  url         String
+  author      String
+  description String?
+  categoryId  String
+  category    Category @relation(fields: [categoryId], references: [id])
+
+  @@unique([slug, categoryId])
 }
