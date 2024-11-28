@@ -8,6 +8,32 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
+model Client {
+  id        String  @id @default(nanoid(7))
+  phone     Int     @unique
+  email     String? @unique
+  firstName String?
+  lastName  String?
+  Orders    Order[]
+}
+
+model Order {
+  id        String      @id @default(nanoid(7))
+  clientId  String
+  status    String
+  client    Client      @relation(fields: [clientId], references: [id])
+  OrderItem OrderItem[]
+}
+
+model OrderItem {
+  id        String  @id @default(nanoid(12))
+  orderId   String
+  productId String
+  quantity  Int
+  order     Order   @relation(fields: [orderId], references: [id])
+  product   Product @relation(fields: [productId], references: [id])
+}
+
 model Category {
   id          String     @id @default(nanoid(7))
   name        String
@@ -23,15 +49,16 @@ model Category {
 }
 
 model Product {
-  id          String   @id @default(nanoid(7))
-  name        String   @unique
-  slug        String   @unique
+  id          String      @id @default(nanoid(7))
+  name        String      @unique
+  slug        String      @unique
   price       Float
   url         String
   author      String
   description String?
   categoryId  String
-  category    Category @relation(fields: [categoryId], references: [id])
+  category    Category    @relation(fields: [categoryId], references: [id])
+  OrderItem   OrderItem[]
 
   @@unique([slug, categoryId])
 }

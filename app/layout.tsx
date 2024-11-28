@@ -41,7 +41,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ru" suppressHydrationWarning>
-      <body className={`${font.variable} ${font.className} antialiased`}>
+      <body
+        className={`${font.variable} ${font.className} flex min-h-dvh flex-col overflow-y-scroll antialiased`}
+      >
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"

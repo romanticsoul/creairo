@@ -13,9 +13,6 @@ export default {
           "2xl": "1200px",
         },
       },
-      fontSize: {
-        h2: "clamp(1.5rem, calc(1.30rem + 0.6vw), 2.25rem)",
-      },
       fontFamily: {
         sans: ["var(--font-sans)"],
         mono: ["var(--font-mono)"],
